@@ -128,6 +128,39 @@ spec:
 
 ### Решение 2
 
+Создадим NodePort Service
+
+service-nginx-multitool-nodeport.yaml
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-multitool-nodeport
+spec:
+  selector:
+    app: nginx-multitool
+  ports:
+  - name: nginx-port
+    protocol: TCP
+    port: 9001
+    targetPort: 80
+    nodePort: 30001
+  - name: multitool-port
+    protocol: TCP
+    port: 9002
+    targetPort: 8080
+    nodePort: 30002
+  type: NodePort
+```
+
+Запускаем и открываем порты
+
+![img4](img/img4.jpg)
+
+Проверка доступности извне по внешнему IP
+
+![img5](img/img5.jpg)
+
 ------
 
 ### Правила приёма работы
