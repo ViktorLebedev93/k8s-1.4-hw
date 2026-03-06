@@ -34,7 +34,7 @@
 
 Создадим Deployment с 3 репликами
 
-deployment-nginx-multitool.yaml
+[deployment-nginx-multitool.yaml](https://github.com/ViktorLebedev93/k8s-1.4-hw/blob/main/deployment-nginx-multitool.yaml)
 ```yaml
 apiVersion: apps/v1
 kind: Deployment
@@ -72,7 +72,7 @@ spec:
 
 Создадим ClusterIP Service
 
-service-nginx-multitool-clusterip.yaml
+[service-nginx-multitool-clusterip.yaml](https://github.com/ViktorLebedev93/k8s-1.4-hw/blob/main/service-nginx-multitool-clusterip.yaml)
 ```yaml
 apiVersion: v1
 kind: Service
@@ -97,7 +97,7 @@ spec:
 
 Создадим тестовый Pod
 
-pod-test-multitool.yaml
+[pod-test-multitool.yaml](https://github.com/ViktorLebedev93/k8s-1.4-hw/blob/main/pod-test-multitool.yaml)
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -130,7 +130,7 @@ spec:
 
 Создадим NodePort Service
 
-service-nginx-multitool-nodeport.yaml
+[service-nginx-multitool-nodeport.yaml](https://github.com/ViktorLebedev93/k8s-1.4-hw/blob/main/service-nginx-multitool-nodeport.yaml)
 ```yaml
 apiVersion: v1
 kind: Service
@@ -160,6 +160,10 @@ spec:
 Проверка доступности извне по внешнему IP
 
 ![img5](img/img5.jpg)
+
+Все созданные поды и сервисы
+
+![img6](img/img6.jpg)
 
 ------
 
