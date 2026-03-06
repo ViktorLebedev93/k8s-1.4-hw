@@ -32,6 +32,92 @@
 
 ### Решение 1
 
+Создадим Deployment с 3 репликами
+
+deployment-nginx-multitool.yaml
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-multitool-deployment
+  labels:
+    app: nginx-multitool
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx-multitool
+  template:
+    metadata:
+      labels:
+        app: nginx-multitool
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+          name: nginx-port
+      - name: multitool
+        image: wbitt/network-multitool
+        ports:
+        - containerPort: 8080
+          name: multitool-port
+        env:
+        - name: HTTP_PORT
+          value: "8080"
+```
+
+![img1](img/img1.jpg)
+
+Создадим ClusterIP Service
+
+service-nginx-multitool-clusterip.yaml
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-multitool-service
+spec:
+  selector:
+    app: nginx-multitool
+  ports:
+  - name: nginx-port
+    protocol: TCP
+    port: 9001
+    targetPort: 80
+  - name: multitool-port
+    protocol: TCP
+    port: 9002
+    targetPort: 8080
+  type: ClusterIP
+```
+
+![img2](img/img2.jpg)
+
+Создадим тестовый Pod
+
+pod-test-multitool.yaml
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-multitool
+  labels:
+    app: test-multitool
+spec:
+  containers:
+  - name: multitool
+    image: wbitt/network-multitool
+    env:
+    - name: HTTP_PORT
+      value: "8080"
+    command: ["sleep", "3600"]
+```
+
+Применение, запуск и проверка доступа по разным портам
+![img3](img/img3.jpg)
+
 ------
 
 ### Задание 2. Создать Service и обеспечить доступ к приложениям снаружи кластера
